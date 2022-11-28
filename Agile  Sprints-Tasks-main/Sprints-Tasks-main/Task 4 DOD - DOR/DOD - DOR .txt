@@ -1,0 +1,18 @@
+Definition of Done DOD:
+
+1- create a form to get user data so that they can use the application 
+	- Each form should have some validations 
+	- User should type a correct Email.
+	- User should type an egyption number.
+	- User should provide location to get the nearest available resturnt.
+	-> if the above cases filled, the user can sign in and use the app
+
+-------------------------------------------------------------------------------------------------
+
+
+Definition Of Ready (DOR):
+   = The story should be written exactly in the ‘user story’ format.
+   = The Acceptance criteria must be understood by the team.
+   = The Team needs to estimate the story.
+   = The team should understand how to provide a demo of the features.
+   = The Performance criteria should be understood by the team.
