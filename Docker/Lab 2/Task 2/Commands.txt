@@ -1,0 +1,140 @@
+[root@localhost ~]# docker images
+REPOSITORY                TAG          IMAGE ID       CREATED         SIZE
+flask                     V2           7452645db398   44 hours ago    59.4MB
+flask_docker              V1           41c25b05f70c   45 hours ago    60.8MB
+mysql                     latest       7484689f290f   2 days ago      538MB
+jenkins/jenkins           latest       51432d6486b3   3 days ago      470MB
+redis                     latest       3e12e2ceb68f   3 days ago      117MB
+nginx                     latest       ac8efec875ce   3 days ago      142MB
+python                    3.8-alpine   1e9f5875386b   9 days ago      48.2MB
+alpine                    latest       49176f190c7e   2 weeks ago     7.05MB
+ubuntu                    latest       a8780b506fa4   5 weeks ago     77.8MB
+hello-world               latest       feb5d9fea6a5   14 months ago   13.3kB
+centos                    latest       5d0da3dc9764   14 months ago   231MB
+kodekloud/simple-webapp   latest       c6e3cd9aae36   4 years ago     84.8MB
+ubuntu                    17.10        e211a66937c6   4 years ago     100MB
+ubuntu                    17.04        fe1cc5b91830   4 years ago     95.6MB
+[root@localhost ~]# touch Dockerfile
+[root@localhost ~]# docker run httpd
+Unable to find image 'httpd:latest' locally
+latest: Pulling from library/httpd
+025c56f98b67: Already exists 
+94efcc2978ca: Pull complete 
+f06194b937dc: Pull complete 
+e8f73658d652: Pull complete 
+0a22f1af035b: Pull complete 
+Digest: sha256:550274cfad1e6ab57cd5009b22a2d97946bdae50989db350a222dae93babc723
+Status: Downloaded newer image for httpd:latest
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. Set the 'ServerName' directive globally to suppress this message
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. Set the 'ServerName' directive globally to suppress this message
+[Fri Dec 09 15:36:04.857736 2022] [mpm_event:notice] [pid 1:tid 140558571007296] AH00489: Apache/2.4.54 (Unix) configured -- resuming normal operations
+[Fri Dec 09 15:36:04.858459 2022] [core:notice] [pid 1:tid 140558571007296] AH00094: Command line: 'httpd -D FOREGROUND'
+^C[Fri Dec 09 15:41:20.583770 2022] [mpm_event:notice] [pid 1:tid 140558571007296] AH00491: caught SIGTERM, shutting down
+[root@localhost ~]# ls -a
+.                backups        .bashrc  .dbus                 reports  T2homebackup.tar  .vscode-server
+..               .bash_history  .cache   Dockerfile            Reports  .tcshrc           .wget-hsts
+anaconda-ks.cfg  .bash_logout   .config  done                  sprints  test              .xauth9mpPgX
+backup           .bash_profile  .cshrc   initial-setup-ks.cfg  .ssh     .viminfo          .xauthJZ6RyL
+[root@localhost ~]# cd sprints/
+[root@localhost sprints]# mkdir -p docker/lab2/task2
+[root@localhost sprints]# cd docker/lab2/task2/
+[root@localhost task2]# touch DockerFile
+[root@localhost task2]# touch index.html
+[root@localhost task2]# 
+ *  History restored 
+
+[root@localhost task2]# docker run --rm httpd:2.4 cat /usr/local/apache2/conf/httpd.conf > my-httpd.conf
+Unable to find image 'httpd:2.4' locally
+2.4: Pulling from library/httpd
+Digest: sha256:550274cfad1e6ab57cd5009b22a2d97946bdae50989db350a222dae93babc723
+Status: Downloaded newer image for httpd:2.4
+[root@localhost task2]# docker image build -t httpd:V2 .
+unable to prepare context: unable to evaluate symlinks in Dockerfile path: lstat /root/sprints/docker/lab2/task2/Dockerfile: no such file or directory
+[root@localhost task2]# mv DockerFile  Dockerfile 
+[root@localhost task2]# docker image build -t httpd:V2 .
+Sending build context to Docker daemon  24.06kB
+Error response from daemon: the Dockerfile (Dockerfile) cannot be empty
+[root@localhost task2]# docker image build -t httpd:V2 .
+Sending build context to Docker daemon  24.06kB
+Error response from daemon: the Dockerfile (Dockerfile) cannot be empty
+[root@localhost task2]# ll
+total 28
+-rw-r--r--. 1 root root     0 Dec  9 17:44 Dockerfile
+-rw-r--r--. 1 root root   302 Dec  9 17:46 index.html
+-rw-r--r--. 1 root root 20829 Dec  9 18:17 my-httpd.conf
+[root@localhost task2]# 
+[root@localhost task2]# docker image build -t httpd:V2 .
+Sending build context to Docker daemon  24.06kB
+Error response from daemon: the Dockerfile (Dockerfile) cannot be empty
+[root@localhost task2]# docker image build -t httpd:V2 .
+Sending build context to Docker daemon  24.58kB
+Step 1/3 : FROM httpd
+ ---> 157dcdf23d6c
+Step 2/3 : COPY index.html /usr/local/apache2/htdocs/
+ ---> 8cc05e56e05f
+Step 3/3 : COPY my-httpd.conf /usr/local/apache2/conf/httpd.conf
+ ---> 9f656d9b1b78
+Successfully built 9f656d9b1b78
+Successfully tagged httpd:V2
+[root@localhost task2]# docker run -p httpd:V2
+"docker run" requires at least 1 argument.
+See 'docker run --help'.
+
+Usage:  docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+
+Run a command in a new container
+[root@localhost task2]# docker run -p 80:9999 httpd:V2
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. Set the 'ServerName' directive globally to suppress this message
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. Set the 'ServerName' directive globally to suppress this message
+[Fri Dec 09 16:24:57.046180 2022] [mpm_event:notice] [pid 1:tid 140426277047616] AH00489: Apache/2.4.54 (Unix) configured -- resuming normal operations
+[Fri Dec 09 16:24:57.046340 2022] [core:notice] [pid 1:tid 140426277047616] AH00094: Command line: 'httpd -D FOREGROUND'
+172.17.0.1 - - [09/Dec/2022:16:26:53 +0000] "GET / HTTP/1.1" 200 302
+172.17.0.1 - - [09/Dec/2022:16:26:53 +0000] "GET /favicon.ico HTTP/1.1" 404 196
+172.17.0.1 - - [09/Dec/2022:16:29:09 +0000] "GET / HTTP/1.1" 200 302
+[Fri Dec 09 16:41:31.508627 2022] [mpm_event:notice] [pid 1:tid 140426277047616] AH00492: caught SIGWINCH, shutting down gracefully
+[root@localhost task2]# docker run -p 80:9999 httpd:V2
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. Set the 'ServerName' directive globally to suppress this message
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. Set the 'ServerName' directive globally to suppress this message
+[Fri Dec 09 16:41:43.009607 2022] [mpm_event:notice] [pid 1:tid 140061802179904] AH00489: Apache/2.4.54 (Unix) configured -- resuming normal operations
+[Fri Dec 09 16:41:43.010299 2022] [core:notice] [pid 1:tid 140061802179904] AH00094: Command line: 'httpd -D FOREGROUND'
+172.17.0.1 - - [09/Dec/2022:16:41:58 +0000] "GET / HTTP/1.1" 304 -
+172.17.0.1 - - [09/Dec/2022:16:42:00 +0000] "GET / HTTP/1.1" 304 -
+[Fri Dec 09 16:43:30.466116 2022] [mpm_event:notice] [pid 1:tid 140061802179904] AH00492: caught SIGWINCH, shutting down gracefully
+[root@localhost task2]# docker run -p 80:9999 httpd:V2
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. Set the 'ServerName' directive globally to suppress this message
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. Set the 'ServerName' directive globally to suppress this message
+[Fri Dec 09 17:05:10.844182 2022] [mpm_event:notice] [pid 1:tid 140117830663488] AH00489: Apache/2.4.54 (Unix) configured -- resuming normal operations
+[Fri Dec 09 17:05:10.844282 2022] [core:notice] [pid 1:tid 140117830663488] AH00094: Command line: 'httpd -D FOREGROUND'
+^C[Fri Dec 09 17:05:17.669522 2022] [mpm_event:notice] [pid 1:tid 140117830663488] AH00491: caught SIGTERM, shutting down
+[root@localhost task2]# docker image build -t httpd:V2 .
+Sending build context to Docker daemon  24.58kB
+Step 1/6 : FROM httpd
+ ---> 157dcdf23d6c
+Step 2/6 : COPY index.html /usr/local/apache2/htdocs/
+ ---> Using cache
+ ---> 8cc05e56e05f
+Step 3/6 : COPY my-httpd.conf /usr/local/apache2/conf/httpd.conf
+ ---> Using cache
+ ---> 9f656d9b1b78
+Step 4/6 : ENV CONTAINER "docker"
+ ---> Running in b0d786accffa
+Removing intermediate container b0d786accffa
+ ---> 4531d8cb5fb1
+Step 5/6 : EXPOSE 9999
+ ---> Running in b57a4e1d0017
+Removing intermediate container b57a4e1d0017
+ ---> 019ac0cf22b0
+Step 6/6 : CMD echo ${CONTAINER} && httpd -D FOREGROUND;
+ ---> Running in 32e655fbab6c
+Removing intermediate container 32e655fbab6c
+ ---> d60a69722b96
+Successfully built d60a69722b96
+Successfully tagged httpd:V2
+[root@localhost task2]# docker run -p 80:9999 httpd:V2
+docker
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. Set the 'ServerName' directive globally to suppress this message
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. Set the 'ServerName' directive globally to suppress this message
+[Fri Dec 09 17:05:30.903970 2022] [mpm_event:notice] [pid 7:tid 139786772036928] AH00489: Apache/2.4.54 (Unix) configured -- resuming normal operations
+[Fri Dec 09 17:05:30.904075 2022] [core:notice] [pid 7:tid 139786772036928] AH00094: Command line: 'httpd -D FOREGROUND'
+172.17.0.1 - - [09/Dec/2022:17:05:41 +0000] "GET / HTTP/1.1" 304 -
+172.17.0.1 - - [09/Dec/2022:17:05:43 +0000] "GET / HTTP/1.1" 304 -

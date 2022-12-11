@@ -1,0 +1,445 @@
+####################
+Problem 1
+####################
+-- Add network --
+
+[root@localhost simple-flask-app]# docker network create network-sprints-1 -- driver=bridge --driver=bridge --subnet=192.168.0.0/24 --ip-range=192.168.0.0/24 --gateway=192.168.0.254 network-sprints-1
+"docker network create" requires exactly 1 argument.
+See 'docker network create --help'.
+
+Usage:  docker network create [OPTIONS] NETWORK
+
+Create a network
+[root@localhost simple-flask-app]# docker network prune
+WARNING! This will remove all custom networks not used by at least one container.
+Are you sure you want to continue? [y/N] y
+Deleted Networks:
+network-sprints-1
+
+[root@localhost simple-flask-app]# docker network ls
+NETWORK ID     NAME      DRIVER    SCOPE
+e122a5621913   bridge    bridge    local
+53efac1ae1f7   host      host      local
+0d4f1506cbf3   none      null      local
+[root@localhost simple-flask-app]# docker network create --subnet=192.168.0.0/24 --gateway=192.168.0.0 net-192
+Error response from daemon: failed to allocate gateway (192.168.0.0): Address already in use
+[root@localhost simple-flask-app]# docker network create --subnet=192.168.0.0/24 --gateway=192.168.0.1 net-192
+a4a20b5399110731b8c46944f02a3d4c9f58fc4343a44650ec8aa272451a8c7c
+[root@localhost simple-flask-app]# docker network create --subnet=10.5.0.0/24 --gateway=10.5.0.1 net-10
+a33e7b5dde7f9013a97be0beadf8ccb4b6c3240365c1d221ad3ffe45fc471ced
+[root@localhost simple-flask-app]# docker run -itd --network=net-192 ubuntu
+0250eefa987af96f4377f7b0f8b39566454fce9b40295cee4d6589e021195175
+[root@localhost simple-flask-app]# docker run -itd --network=net-192 centos
+9e2b68a756fcaa33b1d06c9208524b62521dc1aced060efc7aec5cc822ebed62
+[root@localhost simple-flask-app]# docker run -itd --network=net-10 alpine
+5ab219759300813a327b7377581580174036d08469401f448708220733dc634d
+[root@localhost simple-flask-app]# docker network ls
+NETWORK ID     NAME      DRIVER    SCOPE
+e122a5621913   bridge    bridge    local
+53efac1ae1f7   host      host      local
+a33e7b5dde7f   net-10    bridge    local
+a4a20b539911   net-192   bridge    local
+0d4f1506cbf3   none      null      local
+[root@localhost simple-flask-app]# docker images
+REPOSITORY                TAG          IMAGE ID       CREATED             SIZE
+flask                     V2           7452645db398   About an hour ago   59.4MB
+flask_docker              V1           41c25b05f70c   2 hours ago         60.8MB
+mysql                     latest       7484689f290f   18 hours ago        538MB
+jenkins/jenkins           latest       51432d6486b3   30 hours ago        470MB
+redis                     latest       3e12e2ceb68f   38 hours ago        117MB
+nginx                     latest       ac8efec875ce   40 hours ago        142MB
+python                    3.8-alpine   1e9f5875386b   7 days ago          48.2MB
+alpine                    latest       49176f190c7e   2 weeks ago         7.05MB
+ubuntu                    latest       a8780b506fa4   5 weeks ago         77.8MB
+hello-world               latest       feb5d9fea6a5   14 months ago       13.3kB
+centos                    latest       5d0da3dc9764   14 months ago       231MB
+kodekloud/simple-webapp   latest       c6e3cd9aae36   4 years ago         84.8MB
+ubuntu                    17.10        e211a66937c6   4 years ago         100MB
+ubuntu                    17.04        fe1cc5b91830   4 years ago         95.6MB
+
+
+#########################################################################################
+########################################################################################
+First container net-192
+
+[root@localhost simple-flask-app]# docker run -it --network=net-192 ubuntu
+root@b2b4e22a4ac5:/# ifconfig
+bash: ifconfig: command not found
+root@b2b4e22a4ac5:/# apt install net-tools
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+E: Unable to locate package net-tools
+root@b2b4e22a4ac5:/# apt update
+Get:1 http://archive.ubuntu.com/ubuntu jammy InRelease [270 kB]
+Get:2 http://security.ubuntu.com/ubuntu jammy-security InRelease [110 kB]
+Get:3 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [657 kB]
+Get:4 http://archive.ubuntu.com/ubuntu jammy-updates InRelease [114 kB]
+Get:5 http://archive.ubuntu.com/ubuntu jammy-backports InRelease [99.8 kB]
+Get:6 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 Packages [4732 B]
+Get:7 http://archive.ubuntu.com/ubuntu jammy/main amd64 Packages [1792 kB]
+Get:8 http://security.ubuntu.com/ubuntu jammy-security/restricted amd64 Packages [577 kB]
+Get:9 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 Packages [780 kB]
+Get:10 http://archive.ubuntu.com/ubuntu jammy/multiverse amd64 Packages [266 kB]
+Get:11 http://archive.ubuntu.com/ubuntu jammy/restricted amd64 Packages [164 kB]
+Get:12 http://archive.ubuntu.com/ubuntu jammy/universe amd64 Packages [17.5 MB]
+Get:13 http://archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 Packages [624 kB]                     
+Get:14 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [956 kB]                           
+Get:15 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [963 kB]                       
+Get:16 http://archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 Packages [8150 B]                     
+Get:17 http://archive.ubuntu.com/ubuntu jammy-backports/main amd64 Packages [3520 B]                         
+Get:18 http://archive.ubuntu.com/ubuntu jammy-backports/universe amd64 Packages [7278 B]                     
+Fetched 24.9 MB in 17s (1486 kB/s)                                                                           
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+2 packages can be upgraded. Run 'apt list --upgradable' to see them.
+root@b2b4e22a4ac5:/# apt install net-tools
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following NEW packages will be installed:
+  net-tools
+0 upgraded, 1 newly installed, 0 to remove and 2 not upgraded.
+Need to get 204 kB of archives.
+After this operation, 819 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu jammy/main amd64 net-tools amd64 1.60+git20181103.0eebece-1ubuntu5 [204 kB]
+Fetched 204 kB in 1s (374 kB/s)   
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package net-tools.
+(Reading database ... 4395 files and directories currently installed.)
+Preparing to unpack .../net-tools_1.60+git20181103.0eebece-1ubuntu5_amd64.deb ...
+Unpacking net-tools (1.60+git20181103.0eebece-1ubuntu5) ...
+Setting up net-tools (1.60+git20181103.0eebece-1ubuntu5) ...
+root@b2b4e22a4ac5:/# ifconfig
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.0.4  netmask 255.255.255.0  broadcast 192.168.0.255
+        ether 02:42:c0:a8:00:04  txqueuelen 0  (Ethernet)
+        RX packets 3670  bytes 25278256 (25.2 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 1750  bytes 98960 (98.9 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 6  bytes 578 (578.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 6  bytes 578 (578.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+root@b2b4e22a4ac5:/# ping 192.168.0.5
+bash: ping: command not found
+root@b2b4e22a4ac5:/# apt install -y iputils-ping
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  libcap2-bin libpam-cap
+The following NEW packages will be installed:
+  iputils-ping libcap2-bin libpam-cap
+0 upgraded, 3 newly installed, 0 to remove and 2 not upgraded.
+Need to get 76.8 kB of archives.
+After this operation, 280 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu jammy/main amd64 libcap2-bin amd64 1:2.44-1build3 [26.0 kB]
+Get:2 http://archive.ubuntu.com/ubuntu jammy/main amd64 iputils-ping amd64 3:20211215-1 [42.9 kB]
+Get:3 http://archive.ubuntu.com/ubuntu jammy/main amd64 libpam-cap amd64 1:2.44-1build3 [7932 B]
+Fetched 76.8 kB in 1s (61.6 kB/s)  
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package libcap2-bin.
+(Reading database ... 4444 files and directories currently installed.)
+Preparing to unpack .../libcap2-bin_1%3a2.44-1build3_amd64.deb ...
+Unpacking libcap2-bin (1:2.44-1build3) ...
+Selecting previously unselected package iputils-ping.
+Preparing to unpack .../iputils-ping_3%3a20211215-1_amd64.deb ...
+Unpacking iputils-ping (3:20211215-1) ...
+Selecting previously unselected package libpam-cap:amd64.
+Preparing to unpack .../libpam-cap_1%3a2.44-1build3_amd64.deb ...
+Unpacking libpam-cap:amd64 (1:2.44-1build3) ...
+Setting up libcap2-bin (1:2.44-1build3) ...
+Setting up libpam-cap:amd64 (1:2.44-1build3) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 78.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.34.0 /usr/local/share/perl/5.34.0 /usr/lib/x86_64-linux-gnu/perl5/5.34 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl-base /usr/lib/x86_64-linux-gnu/perl/5.34 /usr/share/perl/5.34 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+debconf: falling back to frontend: Teletype
+Setting up iputils-ping (3:20211215-1) ...
+root@b2b4e22a4ac5:/# ping 192.168.0.5
+PING 192.168.0.5 (192.168.0.5) 56(84) bytes of data.
+64 bytes from 192.168.0.5: icmp_seq=1 ttl=64 time=0.103 ms
+64 bytes from 192.168.0.5: icmp_seq=2 ttl=64 time=0.080 ms
+64 bytes from 192.168.0.5: icmp_seq=3 ttl=64 time=0.211 ms
+64 bytes from 192.168.0.5: icmp_seq=4 ttl=64 time=0.064 ms
+64 bytes from 192.168.0.5: icmp_seq=5 ttl=64 time=0.084 ms
+64 bytes from 192.168.0.5: icmp_seq=6 ttl=64 time=0.062 ms
+64 bytes from 192.168.0.5: icmp_seq=7 ttl=64 time=0.112 ms
+64 bytes from 192.168.0.5: icmp_seq=8 ttl=64 time=0.064 ms
+64 bytes from 192.168.0.5: icmp_seq=9 ttl=64 time=0.061 ms
+^C
+--- 192.168.0.5 ping statistics ---
+9 packets transmitted, 9 received, 0% packet loss, time 8170ms
+rtt min/avg/max/mdev = 0.061/0.093/0.211/0.045 ms
+root@b2b4e22a4ac5:/# history
+    1  ifconfig
+    2  apt install net-tools
+    3  apt update
+    4  apt install net-tools
+    5  ifconfig
+    6  ping 192.168.0.5
+    7  apt install -y iputils-ping
+    8  ping 192.168.0.5
+    9  history
+###########################################################################################
+##########################################################################################
+Second container net-192
+
+
+[root@localhost ahmed]# docker run -it --network=net-192 centos
+[root@cff8a4037c49 /]# apt update
+bash: apt: command not found
+[root@cff8a4037c49 /]# yum update
+Failed to set locale, defaulting to C.UTF-8
+CentOS Linux 8 - AppStream                       48  B/s |  38  B     00:00    
+Error: Failed to download metadata for repo 'appstream': Cannot prepare internal mirrorlist: No URLs in mirrorlist
+[root@cff8a4037c49 /]# dnf update
+Failed to set locale, defaulting to C.UTF-8
+CentOS Linux 8 - AppStream                       45  B/s |  38  B     00:00    
+Error: Failed to download metadata for repo 'appstream': Cannot prepare internal mirrorlist: No URLs in mirrorlist
+[root@cff8a4037c49 /]# exit      
+exit
+[root@localhost ahmed]# docker run -it --network=net-192 ubuntu
+root@5155d837980c:/# apt update
+Get:1 http://archive.ubuntu.com/ubuntu jammy InRelease [270 kB]
+Get:2 http://security.ubuntu.com/ubuntu jammy-security InRelease [110 kB]
+Get:3 http://archive.ubuntu.com/ubuntu jammy-updates InRelease [114 kB]
+Get:4 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [657 kB]
+Get:5 http://archive.ubuntu.com/ubuntu jammy-backports InRelease [99.8 kB]
+Get:6 http://archive.ubuntu.com/ubuntu jammy/restricted amd64 Packages [164 kB]
+Get:7 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 Packages [780 kB]
+Get:8 http://archive.ubuntu.com/ubuntu jammy/universe amd64 Packages [17.5 MB]
+Get:9 http://security.ubuntu.com/ubuntu jammy-security/restricted amd64 Packages [577 kB]
+Get:10 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 Packages [4732 B]
+Get:11 http://archive.ubuntu.com/ubuntu jammy/main amd64 Packages [1792 kB]    
+Get:12 http://archive.ubuntu.com/ubuntu jammy/multiverse amd64 Packages [266 kB]
+Get:13 http://archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 Packages [8150 B]
+Get:14 http://archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 Packages [624 kB]
+Get:15 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [956 kB]
+Get:16 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [963 kB]
+Get:17 http://archive.ubuntu.com/ubuntu jammy-backports/main amd64 Packages [3520 B]
+Get:18 http://archive.ubuntu.com/ubuntu jammy-backports/universe amd64 Packages [7278 B]
+Fetched 24.9 MB in 19s (1276 kB/s)                                             
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+2 packages can be upgraded. Run 'apt list --upgradable' to see them.
+root@5155d837980c:/# apt install net-tools
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following NEW packages will be installed:
+  net-tools
+0 upgraded, 1 newly installed, 0 to remove and 2 not upgraded.
+Need to get 204 kB of archives.
+After this operation, 819 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu jammy/main amd64 net-tools amd64 1.60+git20181103.0eebece-1ubuntu5 [204 kB]
+Fetched 204 kB in 0s (539 kB/s) 
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package net-tools.
+(Reading database ... 4395 files and directories currently installed.)
+Preparing to unpack .../net-tools_1.60+git20181103.0eebece-1ubuntu5_amd64.deb ...
+Unpacking net-tools (1.60+git20181103.0eebece-1ubuntu5) ...
+Setting up net-tools (1.60+git20181103.0eebece-1ubuntu5) ...
+root@5155d837980c:/# ifconfig
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.0.5  netmask 255.255.255.0  broadcast 192.168.0.255
+        ether 02:42:c0:a8:00:05  txqueuelen 0  (Ethernet)
+        RX packets 4128  bytes 25302693 (25.3 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 2108  bytes 118280 (118.2 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 6  bytes 578 (578.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 6  bytes 578 (578.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+root@5155d837980c:/# apt-get install -y iputils-ping
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  libcap2-bin libpam-cap
+The following NEW packages will be installed:
+  iputils-ping libcap2-bin libpam-cap
+0 upgraded, 3 newly installed, 0 to remove and 2 not upgraded.
+Need to get 76.8 kB of archives.
+After this operation, 280 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu jammy/main amd64 libcap2-bin amd64 1:2.44-1build3 [26.0 kB]
+Get:2 http://archive.ubuntu.com/ubuntu jammy/main amd64 iputils-ping amd64 3:20211215-1 [42.9 kB]
+Get:3 http://archive.ubuntu.com/ubuntu jammy/main amd64 libpam-cap amd64 1:2.44-1build3 [7932 B]
+Fetched 76.8 kB in 0s (193 kB/s)        
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package libcap2-bin.
+(Reading database ... 4444 files and directories currently installed.)
+Preparing to unpack .../libcap2-bin_1%3a2.44-1build3_amd64.deb ...
+Unpacking libcap2-bin (1:2.44-1build3) ...
+Selecting previously unselected package iputils-ping.
+Preparing to unpack .../iputils-ping_3%3a20211215-1_amd64.deb ...
+Unpacking iputils-ping (3:20211215-1) ...
+Selecting previously unselected package libpam-cap:amd64.
+Preparing to unpack .../libpam-cap_1%3a2.44-1build3_amd64.deb ...
+Unpacking libpam-cap:amd64 (1:2.44-1build3) ...
+Setting up libcap2-bin (1:2.44-1build3) ...
+Setting up libpam-cap:amd64 (1:2.44-1build3) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 78.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.34.0 /usr/local/share/perl/5.34.0 /usr/lib/x86_64-linux-gnu/perl5/5.34 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl-base /usr/lib/x86_64-linux-gnu/perl/5.34 /usr/share/perl/5.34 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+debconf: falling back to frontend: Teletype
+Setting up iputils-ping (3:20211215-1) ...
+root@5155d837980c:/# ^C
+root@5155d837980c:/# history
+    1  apt update
+    2  apt install net-tools
+    3  ifconfig
+    4  apt-get install -y iputils-ping
+    5  history
+root@5155d837980c:/# 
+
+
+##########################################################################################
+##########################################################################################
+
+Third Container net-10
+
+[root@localhost ahmed]# docker run -it --network=net-10 ubuntu
+root@bdd76d12ab08:/# apt-get install -y iputils-ping
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+E: Unable to locate package iputils-ping
+root@bdd76d12ab08:/# ifconfig
+bash: ifconfig: command not found
+root@bdd76d12ab08:/# apt-get install -y net-tools   
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+E: Unable to locate package net-tools
+root@bdd76d12ab08:/# apt-get update              
+Get:1 http://archive.ubuntu.com/ubuntu jammy InRelease [270 kB]
+Get:2 http://security.ubuntu.com/ubuntu jammy-security InRelease [110 kB]
+Get:3 http://archive.ubuntu.com/ubuntu jammy-updates InRelease [114 kB]
+Get:4 http://archive.ubuntu.com/ubuntu jammy-backports InRelease [99.8 kB]
+Get:5 http://archive.ubuntu.com/ubuntu jammy/universe amd64 Packages [17.5 MB]
+Get:6 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 Packages [780 kB]
+Get:7 http://archive.ubuntu.com/ubuntu jammy/main amd64 Packages [1792 kB]     
+Get:8 http://archive.ubuntu.com/ubuntu jammy/multiverse amd64 Packages [266 kB]
+Get:9 http://archive.ubuntu.com/ubuntu jammy/restricted amd64 Packages [164 kB]
+Get:10 http://archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 Packages [8150 B]
+Get:11 http://archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 Packages [624 kB]
+Get:12 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [956 kB]
+Get:13 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [657 kB]
+Get:14 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [963 kB]
+Get:15 http://archive.ubuntu.com/ubuntu jammy-backports/main amd64 Packages [3520 B]
+Get:16 http://archive.ubuntu.com/ubuntu jammy-backports/universe amd64 Packages [7278 B]
+Get:17 http://security.ubuntu.com/ubuntu jammy-security/restricted amd64 Packages [577 kB]
+Get:18 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 Packages [4732 B]
+Fetched 24.9 MB in 16s (1526 kB/s)                                             
+Reading package lists... Done
+root@bdd76d12ab08:/# apt-get install -y net-tools
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following NEW packages will be installed:
+  net-tools
+0 upgraded, 1 newly installed, 0 to remove and 2 not upgraded.
+Need to get 204 kB of archives.
+After this operation, 819 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu jammy/main amd64 net-tools amd64 1.60+git20181103.0eebece-1ubuntu5 [204 kB]
+Fetched 204 kB in 0s (419 kB/s) 
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package net-tools.
+(Reading database ... 4395 files and directories currently installed.)
+Preparing to unpack .../net-tools_1.60+git20181103.0eebece-1ubuntu5_amd64.deb ...
+Unpacking net-tools (1.60+git20181103.0eebece-1ubuntu5) ...
+Setting up net-tools (1.60+git20181103.0eebece-1ubuntu5) ...
+root@bdd76d12ab08:/# apt-get install -y iputils-ping
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  libcap2-bin libpam-cap
+The following NEW packages will be installed:
+  iputils-ping libcap2-bin libpam-cap
+0 upgraded, 3 newly installed, 0 to remove and 2 not upgraded.
+Need to get 76.8 kB of archives.
+After this operation, 280 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu jammy/main amd64 libcap2-bin amd64 1:2.44-1build3 [26.0 kB]
+Get:2 http://archive.ubuntu.com/ubuntu jammy/main amd64 iputils-ping amd64 3:20211215-1 [42.9 kB]
+Get:3 http://archive.ubuntu.com/ubuntu jammy/main amd64 libpam-cap amd64 1:2.44-1build3 [7932 B]
+Fetched 76.8 kB in 0s (176 kB/s)      
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package libcap2-bin.
+(Reading database ... 4444 files and directories currently installed.)
+Preparing to unpack .../libcap2-bin_1%3a2.44-1build3_amd64.deb ...
+Unpacking libcap2-bin (1:2.44-1build3) ...
+Selecting previously unselected package iputils-ping.
+Preparing to unpack .../iputils-ping_3%3a20211215-1_amd64.deb ...
+Unpacking iputils-ping (3:20211215-1) ...
+Selecting previously unselected package libpam-cap:amd64.
+Preparing to unpack .../libpam-cap_1%3a2.44-1build3_amd64.deb ...
+Unpacking libpam-cap:amd64 (1:2.44-1build3) ...
+Setting up libcap2-bin (1:2.44-1build3) ...
+Setting up libpam-cap:amd64 (1:2.44-1build3) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 78.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.34.0 /usr/local/share/perl/5.34.0 /usr/lib/x86_64-linux-gnu/perl5/5.34 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl-base /usr/lib/x86_64-linux-gnu/perl/5.34 /usr/share/perl/5.34 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+debconf: falling back to frontend: Teletype
+Setting up iputils-ping (3:20211215-1) ...
+root@bdd76d12ab08:/# ifconfig                       
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.5.0.3  netmask 255.255.255.0  broadcast 10.5.0.255
+        ether 02:42:0a:05:00:03  txqueuelen 0  (Ethernet)
+        RX packets 4456  bytes 25398504 (25.3 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 1989  bytes 112352 (112.3 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 8  bytes 770 (770.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 8  bytes 770 (770.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+root@bdd76d12ab08:/# ping 192.168.0.5
+PING 192.168.0.5 (192.168.0.5) 56(84) bytes of data.
+
+
+^C
+--- 192.168.0.5 ping statistics ---
+46 packets transmitted, 0 received, 100% packet loss, time 46081ms
+
+root@bdd76d12ab08:/# history
+    1  apt-get install -y iputils-ping
+    2  ifconfig
+    3  apt-get install -y net-tools
+    4  apt-get update
+    5  apt-get install -y net-tools
+    6  apt-get install -y iputils-ping
+    7  ifconfig
+    8  ping 192.168.0.5
+    9  history
+
+---------------------------------------------------------------------------------------------
+
+
+

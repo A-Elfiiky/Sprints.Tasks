@@ -1,0 +1,26 @@
+version: "3"
+services:
+
+  my-flask-app:
+    image: flask:V2
+    container_name: my-flask-app
+
+    depends_on:
+      - nginx-g
+      - mysql
+
+  nginx-g:
+    image: nginx:stable-alpine
+    container_name: my-nginx
+    
+  mysql:
+    image: mysql
+    container_name: my-mysql
+    command: sleep 50
+    volumes:
+        - type: volume
+          source: sql-vol
+          target: /code
+
+volumes:
+  sql-vol:

@@ -1,0 +1,2 @@
+[root@localhost task3-2]# docker compose up -d
+[root@localhost task3-2]#

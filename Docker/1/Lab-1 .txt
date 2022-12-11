@@ -1,0 +1,396 @@
+##################
+
+1- Check docker version 
+[root@localhost ~]# docker --version 
+Docker version 20.10.21, build baeda1f
+
+#####################
+2- Hello World
+
+[root@localhost ~]# docker run hello-world
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+ 
+ ##############################
+3. Run Reddis in detached mode
+
+[root@localhost ~]# docker run -d redis
+792b62b2f6d3772af7118f7d29d3343957c0ce85e6bdbc06237471e47879fef0
+[root@localhost ~]# 
+
+##############################
+ 4. Stop Redis container
+ 
+[root@localhost ~]# docker run -d redis
+792b62b2f6d3772af7118f7d29d3343957c0ce85e6bdbc06237471e47879fef0
+[root@localhost ~]# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS      NAMES
+792b62b2f6d3   redis     "docker-entrypoint.s…"   38 seconds ago   Up 37 seconds   6379/tcp   sweet_shaw
+[root@localhost ~]# docker stop 792b62b2f6d3
+792b62b2f6d3
+[root@localhost ~]# 
+
+#########
+5. Check present container ID 
+
+[root@localhost ~]# docker ps -a
+CONTAINER ID   IMAGE                     COMMAND                  CREATED              STATUS                      PORTS     NAMES
+792b62b2f6d3   redis                     "docker-entrypoint.s…"   About a minute ago   Exited (0) 56 seconds ago             sweet_shaw
+b524efee8492   hello-world               "/hello"                 7 minutes ago        Exited (0) 7 minutes ago              heuristic_benz
+a89437162f63   ghost:1-alpine            "docker-entrypoint.s…"   4 hours ago          Exited (0) 4 hours ago                fervent_blackburn
+c6cfcea737ac   ghost:1-alpine            "docker-entrypoint.s…"   4 hours ago          Exited (0) 4 hours ago                charming_moore
+d10bbaefae88   flask:V2                  "python app.py"          38 hours ago         Exited (0) 14 hours ago               my-flask-app
+f43c69b6450f   mysql                     "docker-entrypoint.s…"   38 hours ago         Exited (0) 38 hours ago               my-mysql
+eb16ce91e0d9   nginx:stable-alpine       "/docker-entrypoint.…"   39 hours ago         Exited (0) 14 hours ago               my-nginx
+70dfac8869de   node:alpine               "docker-entrypoint.s…"   40 hours ago         Exited (0) 40 hours ago               wonderful_chatterjee
+32cb2485741d   httpd:V2                  "/bin/sh -c 'echo ${…"   43 hours ago         Exited (137) 43 hours ago             awesome_thompson
+0ded19f2b797   9f656d9b1b78              "httpd-foreground"       43 hours ago         Exited (0) 43 hours ago               goofy_sammet
+cd4e224d65f8   9f656d9b1b78              "httpd-foreground"       43 hours ago         Exited (0) 43 hours ago               romantic_ganguly
+e01f1f343527   9f656d9b1b78              "httpd-foreground"       44 hours ago         Exited (0) 43 hours ago               stupefied_chebyshev
+96bd3d0c7167   httpd                     "httpd-foreground"       44 hours ago         Exited (0) 44 hours ago               clever_nobel
+bdd76d12ab08   ubuntu                    "bash"                   3 days ago           Exited (137) 3 days ago               funny_benz
+f3978e9baba3   ubuntu                    "bash"                   3 days ago           Exited (0) 3 days ago                 ecstatic_ride
+5155d837980c   ubuntu                    "bash"                   3 days ago           Exited (137) 3 days ago               gifted_nightingale
+cff8a4037c49   centos                    "/bin/bash"              3 days ago           Exited (1) 3 days ago                 friendly_carson
+b2b4e22a4ac5   ubuntu                    "bash"                   3 days ago           Exited (137) 3 days ago               flamboyant_kapitsa
+1f5814f843c1   centos                    "/bin/bash"              3 days ago           Exited (0) 3 days ago                 pensive_curran
+33df99b11b4f   ubuntu                    "bash"                   3 days ago           Exited (0) 3 days ago                 jovial_chebyshev
+5ab219759300   alpine                    "/bin/sh"                3 days ago           Exited (137) 3 days ago               angry_gauss
+9e2b68a756fc   centos                    "/bin/bash"              3 days ago           Exited (0) 3 days ago                 interesting_boyd
+0250eefa987a   ubuntu                    "bash"                   3 days ago           Exited (137) 3 days ago               gallant_buck
+4a1f0a5058d4   mysql                     "docker-entrypoint.s…"   3 days ago           Exited (1) 3 days ago                 loving_tu
+b44a110d97f2   flask:V2                  "python app.py"          3 days ago           Exited (0) 3 days ago                 relaxed_zhukovsky
+31a6d8c1f1eb   flask_docker:V1           "python app.py"          3 days ago           Exited (1) 3 days ago                 elegant_matsumoto
+8a600190be9b   flask_docker:V1           "python app.py"          3 days ago           Exited (1) 3 days ago                 brave_sutherland
+9c29101cdc07   flask_docker:V1           "python app.py"          3 days ago           Exited (1) 3 days ago                 funny_hypatia
+d48d0a1e7aee   redis                     "docker-entrypoint.s…"   3 days ago           Exited (0) 3 days ago                 zealous_visvesvaraya
+7341177d050f   redis                     "docker-entrypoint.s…"   3 days ago           Exited (0) 3 days ago                 jovial_lamport
+47841a7274dd   hello-world               "/hello"                 3 days ago           Exited (0) 3 days ago                 infallible_wozniak
+00df55126b6f   jenkins/jenkins           "/usr/bin/tini -- /u…"   3 days ago           Exited (137) 3 days ago               competent_dirac
+f7b3d96a0fe2   jenkins/jenkins           "/usr/bin/tini -- /u…"   3 days ago           Exited (143) 3 days ago               elegant_swartz
+f010cad8f69c   jenkins/jenkins           "/usr/bin/tini -- /u…"   3 days ago           Exited (130) 3 days ago               intelligent_dhawan
+0c1f12541037   ubuntu:17.04              "cat /etc/centos-rel…"   3 days ago           Exited (1) 3 days ago                 blissful_dewdney
+0e0ed48af67a   ubuntu:17.10              "cat /etc/centos-rel…"   3 days ago           Exited (1) 3 days ago                 youthful_lehmann
+0ff3d1425740   ubuntu                    "cat /etc/centos-rel…"   3 days ago           Exited (1) 3 days ago                 heuristic_fermat
+82bd6e032dd5   ubuntu                    "bash"                   4 days ago           Exited (0) 4 days ago                 gallant_sinoussi
+79186e3fd386   redis                     "docker-entrypoint.s…"   4 days ago           Exited (0) 3 days ago                 practical_kirch
+197439ba7ab8   kodekloud/simple-webapp   "python app.py"          5 days ago           Exited (0) 5 days ago                 elated_heisenberg
+72332532282e   nginx                     "/docker-entrypoint.…"   5 days ago           Exited (0) 5 days ago                 priceless_nash
+8e6d0c318bf8   centos                    "/bin/bash"              5 days ago           Exited (0) 5 days ago                 ecstatic_lichterman
+7a4b2c4016d2   hello-world               "cat /etc / *release*"   5 days ago           Created                               clever_northcutt
+a7532676895a   hello-world               "cat /etc /*release*"    5 days ago           Created                               stoic_kepler
+031a28a26a3c   hello-world               "cat /etc/centos-rel…"   5 days ago           Created                               eager_banzai
+115f040e39ef   hello-world               "bash"                   5 days ago           Created                               blissful_noyce
+ddca4df0d5d7   alpine                    "bash"                   5 days ago           Created                               sharp_knuth
+371c0b7ec468   alpine                    "cat/etc/*release*"      5 days ago           Created                               lucid_ellis
+a33ef2876fe7   alpine                    "bash"                   5 days ago           Created                               affectionate_wozniak
+dac8d5f8d169   alpine                    "/bin/sh"                5 days ago           Exited (0) 5 days ago                 frosty_morse
+50d2ed3164b0   hello-world               "/hello"                 7 days ago           Exited (0) 7 days ago                 infallible_noether
+f21be10bb63d   hello-world               "/hello"                 7 days ago           Exited (0) 7 days ago                 nostalgic_ramanujan
+a5cf086bf01a   hello-world               "/hello"                 7 days ago           Exited (0) 7 days ago                 youthful_solomon
+910ab5331fb8   hello-world               "/hello"                 7 days ago           Exited (0) 7 days ago                 hungry_austin
+[root@localhost ~]# 
+
+
+##############################
+6. Check redis ID
+792b62b2f6d3
+
+##############################
+7. Run nginx:alpine and delete it
+
+[root@localhost ~]# docker run nginx:alpine
+Unable to find image 'nginx:alpine' locally
+alpine: Pulling from library/nginx
+ca7dd9ec2225: Already exists 
+76a48b0f5898: Pull complete 
+2f12a0e7c01d: Pull complete 
+1a7b9b9bbef6: Pull complete 
+b704883c57af: Pull complete 
+4342b1ab302e: Pull complete 
+Digest: sha256:455c39afebd4d98ef26dd70284aa86e6810b0485af5f4f222b19b89758cabf1e
+Status: Downloaded newer image for nginx:alpine
+/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf
+10-listen-on-ipv6-by-default.sh: info: Enabled listen on IPv6 in /etc/nginx/conf.d/default.conf
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+/docker-entrypoint.sh: Configuration complete; ready for start up
+2022/12/11 12:24:33 [notice] 1#1: using the "epoll" event method
+2022/12/11 12:24:33 [notice] 1#1: nginx/1.23.2
+2022/12/11 12:24:33 [notice] 1#1: built by gcc 11.2.1 20220219 (Alpine 11.2.1_git20220219) 
+2022/12/11 12:24:33 [notice] 1#1: OS: Linux 4.18.0-408.el8.x86_64
+2022/12/11 12:24:33 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/12/11 12:24:33 [notice] 1#1: start worker processes
+2022/12/11 12:24:33 [notice] 1#1: start worker process 30
+2022/12/11 12:24:33 [notice] 1#1: start worker process 31
+^C2022/12/11 12:24:49 [notice] 1#1: signal 2 (SIGINT) received, exiting
+2022/12/11 12:24:49 [notice] 30#30: exiting
+2022/12/11 12:24:49 [notice] 30#30: exit
+2022/12/11 12:24:49 [notice] 31#31: exiting
+2022/12/11 12:24:49 [notice] 31#31: exit
+2022/12/11 12:24:49 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2022/12/11 12:24:49 [notice] 1#1: worker process 30 exited with code 0
+2022/12/11 12:24:49 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2022/12/11 12:24:49 [notice] 1#1: worker process 31 exited with code 0
+2022/12/11 12:24:49 [notice] 1#1: exit
+[root@localhost ~]# 
+
+[root@localhost ~]# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+[root@localhost ~]# docker ps -a
+CONTAINER ID   IMAGE                     COMMAND                  CREATED              STATUS                          PORTS     NAMES
+a86e31221349   nginx:alpine              "/docker-entrypoint.…"   About a minute ago   Exited (0) About a minute ago             ecstatic_buck
+792b62b2f6d3   redis                     "docker-entrypoint.s…"   24 minutes ago       Exited (0) 23 minutes ago                 sweet_shaw
+b524efee8492   hello-world               "/hello"                 30 minutes ago       Exited (0) 30 minutes ago                 heuristic_benz
+a89437162f63   ghost:1-alpine            "docker-entrypoint.s…"   4 hours ago          Exited (0) 4 hours ago                    fervent_blackburn
+c6cfcea737ac   ghost:1-alpine            "docker-entrypoint.s…"   4 hours ago          Exited (0) 4 hours ago                    charming_moore
+d10bbaefae88   flask:V2                  "python app.py"          39 hours ago         Exited (0) 15 hours ago                   my-flask-app
+f43c69b6450f   mysql                     "docker-entrypoint.s…"   39 hours ago         Exited (0) 39 hours ago                   my-mysql
+eb16ce91e0d9   nginx:stable-alpine       "/docker-entrypoint.…"   39 hours ago         Exited (0) 15 hours ago                   my-nginx
+70dfac8869de   node:alpine               "docker-entrypoint.s…"   40 hours ago         Exited (0) 40 hours ago                   wonderful_chatterjee
+32cb2485741d   httpd:V2                  "/bin/sh -c 'echo ${…"   43 hours ago         Exited (137) 43 hours ago                 awesome_thompson
+0ded19f2b797   9f656d9b1b78              "httpd-foreground"       43 hours ago         Exited (0) 43 hours ago                   goofy_sammet
+cd4e224d65f8   9f656d9b1b78              "httpd-foreground"       44 hours ago         Exited (0) 44 hours ago                   romantic_ganguly
+e01f1f343527   9f656d9b1b78              "httpd-foreground"       44 hours ago         Exited (0) 44 hours ago                   stupefied_chebyshev
+96bd3d0c7167   httpd                     "httpd-foreground"       45 hours ago         Exited (0) 45 hours ago                   clever_nobel
+bdd76d12ab08   ubuntu                    "bash"                   3 days ago           Exited (137) 3 days ago                   funny_benz
+f3978e9baba3   ubuntu                    "bash"                   3 days ago           Exited (0) 3 days ago                     ecstatic_ride
+5155d837980c   ubuntu                    "bash"                   3 days ago           Exited (137) 3 days ago                   gifted_nightingale
+cff8a4037c49   centos                    "/bin/bash"              3 days ago           Exited (1) 3 days ago                     friendly_carson
+b2b4e22a4ac5   ubuntu                    "bash"                   3 days ago           Exited (137) 3 days ago                   flamboyant_kapitsa
+1f5814f843c1   centos                    "/bin/bash"              3 days ago           Exited (0) 3 days ago                     pensive_curran
+33df99b11b4f   ubuntu                    "bash"                   3 days ago           Exited (0) 3 days ago                     jovial_chebyshev
+5ab219759300   alpine                    "/bin/sh"                3 days ago           Exited (137) 3 days ago                   angry_gauss
+9e2b68a756fc   centos                    "/bin/bash"              3 days ago           Exited (0) 3 days ago                     interesting_boyd
+0250eefa987a   ubuntu                    "bash"                   3 days ago           Exited (137) 3 days ago                   gallant_buck
+4a1f0a5058d4   mysql                     "docker-entrypoint.s…"   3 days ago           Exited (1) 3 days ago                     loving_tu
+b44a110d97f2   flask:V2                  "python app.py"          3 days ago           Exited (0) 3 days ago                     relaxed_zhukovsky
+31a6d8c1f1eb   flask_docker:V1           "python app.py"          3 days ago           Exited (1) 3 days ago                     elegant_matsumoto
+8a600190be9b   flask_docker:V1           "python app.py"          3 days ago           Exited (1) 3 days ago                     brave_sutherland
+9c29101cdc07   flask_docker:V1           "python app.py"          3 days ago           Exited (1) 3 days ago                     funny_hypatia
+d48d0a1e7aee   redis                     "docker-entrypoint.s…"   3 days ago           Exited (0) 3 days ago                     zealous_visvesvaraya
+7341177d050f   redis                     "docker-entrypoint.s…"   3 days ago           Exited (0) 3 days ago                     jovial_lamport
+47841a7274dd   hello-world               "/hello"                 3 days ago           Exited (0) 3 days ago                     infallible_wozniak
+00df55126b6f   jenkins/jenkins           "/usr/bin/tini -- /u…"   3 days ago           Exited (137) 3 days ago                   competent_dirac
+f7b3d96a0fe2   jenkins/jenkins           "/usr/bin/tini -- /u…"   3 days ago           Exited (143) 3 days ago                   elegant_swartz
+f010cad8f69c   jenkins/jenkins           "/usr/bin/tini -- /u…"   3 days ago           Exited (130) 3 days ago                   intelligent_dhawan
+0c1f12541037   ubuntu:17.04              "cat /etc/centos-rel…"   3 days ago           Exited (1) 3 days ago                     blissful_dewdney
+0e0ed48af67a   ubuntu:17.10              "cat /etc/centos-rel…"   3 days ago           Exited (1) 3 days ago                     youthful_lehmann
+0ff3d1425740   ubuntu                    "cat /etc/centos-rel…"   3 days ago           Exited (1) 3 days ago                     heuristic_fermat
+82bd6e032dd5   ubuntu                    "bash"                   4 days ago           Exited (0) 4 days ago                     gallant_sinoussi
+79186e3fd386   redis                     "docker-entrypoint.s…"   5 days ago           Exited (0) 3 days ago                     practical_kirch
+197439ba7ab8   kodekloud/simple-webapp   "python app.py"          5 days ago           Exited (0) 5 days ago                     elated_heisenberg
+72332532282e   nginx                     "/docker-entrypoint.…"   5 days ago           Exited (0) 5 days ago                     priceless_nash
+8e6d0c318bf8   centos                    "/bin/bash"              5 days ago           Exited (0) 5 days ago                     ecstatic_lichterman
+7a4b2c4016d2   hello-world               "cat /etc / *release*"   5 days ago           Created                                   clever_northcutt
+a7532676895a   hello-world               "cat /etc /*release*"    5 days ago           Created                                   stoic_kepler
+031a28a26a3c   hello-world               "cat /etc/centos-rel…"   5 days ago           Created                                   eager_banzai
+115f040e39ef   hello-world               "bash"                   5 days ago           Created                                   blissful_noyce
+ddca4df0d5d7   alpine                    "bash"                   5 days ago           Created                                   sharp_knuth
+371c0b7ec468   alpine                    "cat/etc/*release*"      5 days ago           Created                                   lucid_ellis
+a33ef2876fe7   alpine                    "bash"                   5 days ago           Created                                   affectionate_wozniak
+dac8d5f8d169   alpine                    "/bin/sh"                5 days ago           Exited (0) 5 days ago                     frosty_morse
+50d2ed3164b0   hello-world               "/hello"                 7 days ago           Exited (0) 7 days ago                     infallible_noether
+f21be10bb63d   hello-world               "/hello"                 7 days ago           Exited (0) 7 days ago                     nostalgic_ramanujan
+a5cf086bf01a   hello-world               "/hello"                 7 days ago           Exited (0) 7 days ago                     youthful_solomon
+910ab5331fb8   hello-world               "/hello"                 7 days ago           Exited (0) 7 days ago                     hungry_austin
+[root@localhost ~]# docker rm a86e31221349
+a86e31221349
+[root@localhost ~]# 
+
+######################3
+Delete image Redis
+
+[root@localhost ~]# docker images
+REPOSITORY    TAG       IMAGE ID       CREATED         SIZE
+redis         latest    3358aea34e8c   2 weeks ago     117MB
+nginx         alpine    19dd4d73108a   3 weeks ago     23.5MB
+hello-world   latest    feb5d9fea6a5   14 months ago   13.3kB
+
+-- --
+[root@localhost ~]# docker image rm 3358aea34e8c
+Error response from daemon: conflict: unable to delete 3358aea34e8c (must be forced) - image is being used by stopped container 208eac352549
+
+-- --
+[root@localhost ~]# docker ps -a
+CONTAINER ID   IMAGE         COMMAND                  CREATED          STATUS                      PORTS     NAMES
+208eac352549   redis         "docker-entrypoint.s…"   13 minutes ago   Exited (0) 9 minutes ago              romantic_pascal
+ccecedec1c65   hello-world   "/hello"                 38 minutes ago   Exited (0) 38 minutes ago             wonderful_bassi
+[root@localhost ~]# docker rm 208eac352549
+208eac352549
+
+-- --
+[root@localhost ~]# docker image rm 3358aea34e8c
+Untagged: redis:latest
+Untagged: redis@sha256:1e3207c292225b6dd21cb74d59255748a50e8f739dd983040df38fa913927cf1
+Deleted: sha256:3358aea34e8c871cc2ecec590dcefcf0945e76ec3f82071f30156ed1be97a5fb
+Deleted: sha256:7a30c117f63b4e6c72fe3378afbcb9ce36379337b3637f332253cd798d751d13
+Deleted: sha256:b1b46e21933d951137a11194588e082fe821c8f4c57442405e1eb5f52352e9a6
+Deleted: sha256:3da53f799e971219b1588d420dc233fc0a24b20b63df235c0be7df3b3bbd489c
+Deleted: sha256:ed4b2a727497ed285215178311ad360bce450969da5439d2b3c3dbf57e5b19d8
+Deleted: sha256:eba15e26a17cb94c52a1cf638c83094c3fa65885f44f6698936b1680515ba228
+Deleted: sha256:ec4a38999118b78eab6899b913a548cb0b2c9b68fd05aff846a56b628b597f38
+
+-- --
+[root@localhost ~]# docker images
+REPOSITORY    TAG       IMAGE ID       CREATED         SIZE
+nginx         alpine    19dd4d73108a   3 weeks ago     23.5MB
+hello-world   latest    feb5d9fea6a5   14 months ago   13.3kB
+
+
+################################
+9- nginx:1.14-alpine and name it web >> web2 ;)
+
+[root@localhost ~]# docker run --name web2 -d nginx:1.14-alpine
+2520d6c63b8f91bf2dda52a371977ed5ef802c98b3eb55546e39291df9608bc7
+[root@localhost ~]# 
+
+#######################################3
+10. Delete all images from host
+
+docker image prune -a >> but I need all of them now, and I cant redwonload them again.
+
+###########################################################
+11. Run nginx alpine with port 38282
+
+[root@localhost ~]# docker run --name weboo -p 38282:80 nginx:alpine
+/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf
+10-listen-on-ipv6-by-default.sh: info: Enabled listen on IPv6 in /etc/nginx/conf.d/default.conf
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+/docker-entrypoint.sh: Configuration complete; ready for start up
+2022/12/11 13:59:59 [notice] 1#1: using the "epoll" event method
+2022/12/11 13:59:59 [notice] 1#1: nginx/1.23.2
+2022/12/11 13:59:59 [notice] 1#1: built by gcc 11.2.1 20220219 (Alpine 11.2.1_git20220219) 
+2022/12/11 13:59:59 [notice] 1#1: OS: Linux 4.18.0-408.el8.x86_64
+2022/12/11 13:59:59 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/12/11 13:59:59 [notice] 1#1: start worker processes
+2022/12/11 13:59:59 [notice] 1#1: start worker process 30
+2022/12/11 13:59:59 [notice] 1#1: start worker process 31
+
+
+###########################
+12- ubunto with size >> df for show docker disk usage , -h for container host name 
+
+[root@localhost ~]# docker run ubuntu df -h
+Filesystem           Size  Used Avail Use% Mounted on
+overlay               22G   11G   11G  50% /
+tmpfs                 64M     0   64M   0% /dev
+tmpfs                2.8G     0  2.8G   0% /sys/fs/cgroup
+shm                   64M     0   64M   0% /dev/shm
+/dev/mapper/cs-root   22G   11G   11G  50% /etc/hosts
+tmpfs                2.8G     0  2.8G   0% /proc/asound
+tmpfs                2.8G     0  2.8G   0% /proc/acpi
+tmpfs                2.8G     0  2.8G   0% /proc/scsi
+tmpfs                2.8G     0  2.8G   0% /sys/firmware
+
+############################################################
+
+13- kodekloud webapp 
+
+[root@localhost ~]# docker run -e APP_COLOR=blue --name blue-app -p 38282:8080 kodekloud/simple-webapp
+ This is a sample web application that displays a colored background. 
+ A color can be specified in two ways. 
+
+ 1. As a command line argument with --color as the argument. Accepts one of red,green,blue,blue2,pink,darkblue 
+ 2. As an Environment variable APP_COLOR. Accepts one of red,green,blue,blue2,pink,darkblue 
+ 3. If none of the above then a random color is picked from the above list. 
+ Note: Command line argument precedes over environment variable.
+
+
+No Command line argument. Color from environment variable =blue
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: Do not use the development server in a production environment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+172.17.0.1 - - [11/Dec/2022 21:21:12] "GET / HTTP/1.1" 200 -
+
+#############################
+
+14-Deploy DB using mysql with password  
+
+[root@localhost ~]# docker run -d --name=mysql-db -e MYSQL_ROOT_PASSWORD=db_pass123 mysql
+f8ceb08ff4dfdfb5d3c48a7f09d6e176b22b572ae0796bfa7aff8a095553380d
+[root@localhost ~]# 
+
+###################################
+15- pull from URL 
+
+[root@localhost simple-flask-app]# git clone https://github.com/sabreensalama/simple-flask-app
+
+#################333
+
+15- volume called mysql_data, run my sql container with mapping 
+
+[root@localhost simple-flask-app]# docker run -v mysql_data:/var/lib/mysql --name=mysql-db -e MYSQL_ROOT_PASSWORD=db_pass123 mysql
+2022-12-11 21:53:14+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.31-1.el8 started.
+2022-12-11 21:53:14+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+2022-12-11 21:53:14+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.31-1.el8 started.
+2022-12-11 21:53:14+00:00 [Note] [Entrypoint]: Initializing database files
+2022-12-11T21:53:14.784287Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2022-12-11T21:53:14.784354Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.0.31) initializing of server in progress as process 79
+2022-12-11T21:53:14.791919Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2022-12-11T21:53:15.791040Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2022-12-11T21:53:17.698960Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+2022-12-11 21:53:22+00:00 [Note] [Entrypoint]: Database files initialized
+2022-12-11 21:53:22+00:00 [Note] [Entrypoint]: Starting temporary server
+2022-12-11T21:53:22.642141Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2022-12-11T21:53:22.642938Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.31) starting as process 128
+2022-12-11T21:53:22.654110Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2022-12-11T21:53:22.803691Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2022-12-11T21:53:23.049042Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2022-12-11T21:53:23.049105Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2022-12-11T21:53:23.053804Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2022-12-11T21:53:23.071504Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.31'  socket: '/var/run/mysqld/mysqld.sock'  port: 0  MySQL Community Server - GPL.
+2022-12-11T21:53:23.071542Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: /var/run/mysqld/mysqlx.sock
+2022-12-11 21:53:23+00:00 [Note] [Entrypoint]: Temporary server started.
+'/var/lib/mysql/mysql.sock' -> '/var/run/mysqld/mysqld.sock'
+Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/leapseconds' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/tzdata.zi' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
+
+2022-12-11 21:53:24+00:00 [Note] [Entrypoint]: Stopping temporary server
+2022-12-11T21:53:24.895287Z 10 [System] [MY-013172] [Server] Received SHUTDOWN from user root. Shutting down mysqld (Version: 8.0.31).
+2022-12-11T21:53:27.363663Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.31)  MySQL Community Server - GPL.
+2022-12-11 21:53:27+00:00 [Note] [Entrypoint]: Temporary server stopped
+
+2022-12-11 21:53:27+00:00 [Note] [Entrypoint]: MySQL init process done. Ready for start up.
+
+2022-12-11T21:53:28.081945Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2022-12-11T21:53:28.082716Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.31) starting as process 1
+2022-12-11T21:53:28.091710Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2022-12-11T21:53:28.207885Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2022-12-11T21:53:28.428021Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2022-12-11T21:53:28.428043Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2022-12-11T21:53:28.431792Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2022-12-11T21:53:28.452381Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+2022-12-11T21:53:28.452431Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.31'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
