@@ -1,0 +1,16 @@
+
+FROM node:alpine
+WORKDIR /node/weather-app
+COPY ./src /node/weather-app 
+COPY package*.json /node/weather-app   
+RUN npm install
+ARG APP_VERSION=latest
+ENV NODE_ENV=production
+COPY /node/weather-app /var/weather-app
+WORKDIR /var/weather-app
+
+EXPOSE 3000
+
+ENTRYPOINT ["./bin/www"]
+
+CMD [ "node" ]
