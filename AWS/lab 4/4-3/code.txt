@@ -1,0 +1,10 @@
+import json
+import boto3
+
+s3 = boto3.resource('s3')
+
+def lambda_handler(event,context):
+    bucket_name = 'targetbucket-ahmed'
+    file_name = 'testfile'
+    s3.Bucket(bucket_name).put_object(Key=file_name)
+    print('file / files uploaded successfully -_-')
