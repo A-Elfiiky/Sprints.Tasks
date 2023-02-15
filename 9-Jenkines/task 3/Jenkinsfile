@@ -1,0 +1,24 @@
+@Library('shared-libraries')_
+ pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+              
+              buildImage()
+            }
+        }
+          stage('Login') {
+            steps {
+              
+              loginDocker()
+            }
+          }
+            stage('pushImage') {
+            steps {
+              
+              pushImage()
+            }
+        }
+    }
+ }
