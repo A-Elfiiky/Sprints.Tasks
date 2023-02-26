@@ -1,0 +1,159 @@
+  919  sudo yum install     ca-certificates     curl     gnupg     lsb-release
+  920  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+  921  sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+  922  sudo yum install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+  923  yum install nodejs
+  924  yum install nodejs -y
+  925  sudo apt install npm
+  926  sudo yum install npm -y
+  927  sudo useradd --no-create-home --shell /bin/false prometheus
+  928  sudo mkdir /etc/prometheus
+  929  sudo mkdir /var/lib/prometheus
+  930  sudo chown prometheus:prometheus /var/lib/prometheus
+  931  ls -a
+  932  ls
+  933  cd /tmp/
+  934  ls
+  935  wget https://github.com/prometheus/prometheus/releases/download/v2.35.0/prometheus-2.35.0.linux-amd64.tar.gz
+  936  tar -xvf prometheus-2.35.0.linux-amd64.tar.gz
+  937  cd prometheus-2.35.0.linux-amd64
+  938  ls
+  939  sudo mv console* /etc/prometheus
+  940  sudo mv prometheus.yml /etc/prometheus
+  941  sudo chown -R prometheus:prometheus /etc/prometheus
+  942  sudo mv prometheus /usr/local/bin/
+  943  sudo mv promtool /usr/local/bin/
+  944  sudo chown prometheus:prometheus /usr/local/bin/prometheus
+  945  sudo chown prometheus:prometheus /usr/local/bin/promtool
+  946  sudo vi /etc/systemd/system/prometheus.service
+  947  ls
+  948  sudo useradd --no-create-home --shell /bin/false node_exporter
+  949  cd /tmp/
+  950  wget https://github.com/prometheus/node_exporter/releases/download/v1.3.1/node_exporter-1.3.1.linux-amd64.tar.gz
+  951  tar -xvf node_exporter-1.3.1.linux-amd64.tar.gz
+  952  cd node_exporter-1.3.1.linux-amd64
+  953  ls
+  954  sudo mv node_exporter /usr/local/bin/
+  955  sudo chown node_exporter:node_exporter /usr/local/bin/node_exporter
+  956  sudo vi /etc/systemd/system/node_exporter.service
+  957  sudo docker run   --volume=/:/rootfs:ro   --volume=/var/run:/var/run:ro   --volume=/sys:/sys:ro   --volume=/var/lib/docker/:/var/lib/docker:ro   --volume=/dev/disk/:/dev/disk:ro   --publish=8080:8080   --detach=true   --name=cadvisor   --privileged   --device=/dev/kmsg   gcr.io/cadvisor/cadvisor
+  958  sudo vi /etc/prometheus/prometheus.yml 
+  959  sudo systemctl restart prometheus
+  960  systemctl status prometheus.service 
+  961  systemctl restart prometheus.service 
+  962  systemctl status prometheus.service 
+  963  systemctl start prometheus.service 
+  964  docker ps
+  965  docker stop bb38497186c0
+  966  docker stop 0afb5fed3ea8
+  967  docker stop 04871d86c626
+  968  docker ps
+  969  vim /etc/sysconfig/selinux
+  970  wget https://github.com/prometheus/prometheus/releases/download/v2.8.1/prometheus-2.8.1.linux-amd64.tar.gz
+  971  useradd --no-create-home --shell /bin/false prometheus
+  972  mkdir /etc/prometheus
+  973  mkdir /var/lib/prometheus
+  974  chown prometheus:prometheus /etc/prometheus
+  975  chown prometheus:prometheus
+  976  chown prometheus:prometheus /var/lib/prometheus
+  977  tar -xvzf prometheus-2.8.1.linux-amd64.tar.gz
+  978  mv prometheus-2.8.1.linux-amd64 prometheuspackage
+  979  cp prometheuspackage/prometheus /usr/local/bin/
+  980  cp prometheuspackage/promtool /usr/local/bin/
+  981  chown prometheus:prometheus /usr/local/bin/prometheus
+  982  chown prometheus:prometheus /usr/local/bin/promtool
+  983  cp -r prometheuspackage/consoles /etc/prometheus
+  984  cp -r prometheuspackage/console_libraries /etc/prometheus
+  985  cp -r prometheuspackage/console_libraries /etc/prometheus
+  986  chown -R prometheus:prometheus /etc/prometheus/consoles
+  987  chown -R prometheus:prometheus /etc/prometheus/console_libraries
+  988  vim /etc/prometheus/prometheus.yml
+  989  chown prometheus:prometheus /etc/prometheus/prometheus.yml
+  990  vim /etc/systemd/system/prometheus.service
+  991  systemctl daemon-reload
+  992  systemctl start prometheus
+  993  systemctl status prometheus
+  994  vim /etc/systemd/system/prometheus.service
+  995  systemctl daemon-reload
+  996  systemctl status prometheus
+  997  systemctl start prometheus
+  998  systemctl status prometheus
+  999  systemctl daemon-reload
+ 1000  systemctl start prometheus
+ 1001  systemctl status prometheus
+ 1002  systemctl start node_exporter
+ 1003  systemctl stop firewalld
+ 1004  wget https://github.com/prometheus/node_exporter/releases/download/v0.17.0/node_exporter-0.17.0.linux-amd64.tar.gz
+ 1005  tar -xvzf node_exporter-0.17.0.linux-amd64.tar.gz
+ 1006  useradd -rs /bin/false nodeusr
+ 1007  mv node_exporter-0.17.0.linux-amd64/node_exporter /usr/local/bin/
+ 1008  vim /etc/systemd/system/node_exporter.service
+ 1009  systemctl daemon-reload
+ 1010  systemctl start node_exporter
+ 1011  systemctl enable node_exporter
+ 1012  vim /etc/prometheus/prometheus.yml
+ 1013  systemctl restart prometheus
+ 1014  sudo docker run   --volume=/:/rootfs:ro   --volume=/var/run:/var/run:ro   --volume=/sys:/sys:ro   --volume=/var/lib/docker/:/var/lib/docker:ro   --volume=/dev/disk/:/dev/disk:ro   --publish=8080:8080   --detach=true   --name=cadvisor   --privileged   --device=/dev/kmsg   gcr.io/cadvisor/cadvisor
+ 1015  docker ps
+ 1016  sudo docker run   --volume=/:/rootfs:ro   --volume=/var/run:/var/run:ro   --volume=/sys:/sys:ro   --volume=/var/lib/docker/:/var/lib/docker:ro   --volume=/dev/disk/:/dev/disk:ro   --publish=8080:8080   --detach=true   --name=cadvisor   --privileged   --device=/dev/kmsg \
+ 1017  sudo docker run   --volume=/:/rootfs:ro   --volume=/var/run:/var/run:ro   --volume=/sys:/sys:ro   --volume=/var/lib/docker/:/var/lib/docker:ro   --volume=/dev/disk/:/dev/disk:ro   --publish=8080:8080   --detach=true   --name=c-advisor   --privileged   --device=/dev/kmsg 
+ 1018  sudo docker run   --volume=/:/rootfs:ro   --volume=/var/run:/var/run:ro   --volume=/sys:/sys:ro   --volume=/var/lib/docker/:/var/lib/docker:ro   --volume=/dev/disk/:/dev/disk:ro   --publish=8080:8080   --detach=true   --name=c-advisor   --privileged   --device=/dev/kmsg   gcr.io/cadvisor/cadvisor
+ 1019  sudo docker run   --volume=/:/rootfs:ro   --volume=/var/run:/var/run:ro   --volume=/sys:/sys:ro   --volume=/var/lib/docker/:/var/lib/docker:ro   --volume=/dev/disk/:/dev/disk:ro   --publish=8080:8080   --detach=true   --name=cadvisor   --privileged   --device=/dev/kmsg   gcr.io/cadvisor/cadvisor
+ 1020  docker ps -a
+ 1021  systemctl restart prometheus.service 
+ 1022  docker stop e5a8404ebc6f
+ 1023  docker stop 3449d15048b8
+ 1024  sudo docker run >   --volume=/:/rootfs:ro >   --volume=/var/run:/var/run:ro >   --volume=/sys:/sys:ro >   --volume=/var/lib/docker/:/var/lib/docker:ro >   --volume=/dev/disk/:/dev/disk:ro >   --publish=8080:8080 >   --detach=true >   --name=cadvisor >   --privileged >   --device=/dev/kmsg >   gcr.io/cadvisor/cadvisor
+ 1025  docker ps
+ 1026  docker rm e5a8404ebc6f
+ 1027  docker rm 3449d15048b8
+ 1028  docker ps -a
+ 1029  sudo docker run   --volume=/:/rootfs:ro   --volume=/var/run:/var/run:ro   --volume=/sys:/sys:ro   --volume=/var/lib/docker/:/var/lib/docker:ro   --volume=/dev/disk/:/dev/disk:ro   --publish=8080:8080   --detach=true   --name=cadvisor   --privileged   --device=/dev/kmsg   gcr.io/cadvisor/cadvisor
+ 1030  sudo docker run   --volume=/:/rootfs:ro   --volume=/var/run:/var/run:ro   --volume=/sys:/sys:ro   --volume=/var/lib/docker/:/var/lib/docker:ro   --volume=/dev/disk/:/dev/disk:ro   --publish=8080:8080   --detach=true   --name=cadvisor   --privileged   --device=/dev/kmsg   gcr.io/cadvisor/cadvisor:$VERSION
+ 1031  sudo docker run   --volume=/:/rootfs:ro   --volume=/var/run:/var/run:ro   --volume=/sys:/sys:ro   --volume=/var/lib/docker/:/var/lib/docker:ro   --volume=/dev/disk/:/dev/disk:ro   --publish=8080:8080   --detach=true   --name=cadvisor   --privileged   --device=/dev/kmsg   gcr.io/cadvisor/cadvisor:$VERSION
+ 1032  docker ps -a
+ 1033  docker ps
+ 1034  docker-compose up -d
+ 1035  docker-compose up
+ 1036  yum docker-compose
+ 1037  yum install docker-compose
+ 1038  dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+ 1039  dnf install docker-ce docker-ce-cli containerd.io
+ 1040  systemctl enable --now docker
+ 1041  firewall-cmd --zone=public --add-masquerade --permanent
+ 1042  firewall-cmd --reload
+ 1043  curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+ 1044  chmod +x /usr/local/bin/docker-compose
+ 1045  usermod -aG docker ahmed
+ 1046  docker run hello-world
+ 1047  docker-compose up
+ 1048  docker-compose -v
+ 1049  docker-compose up -d
+ 1050  docker run \\
+ 1051    --volume=/:/rootfs:ro \\
+ 1052    --volume=/var/run:/var/run:ro \\
+ 1053    --volume=/sys:/sys:ro \\
+ 1054    --volume=/var/lib/docker/:/var/lib/docker:ro \\
+ 1055    --volume=/dev/disk/:/dev/disk:ro \\
+ 1056    --publish=8080:8080 \\
+ 1057    --detach=true \\
+ 1058    --name=cadvisor \\
+ 1059  sudo docker run   --volume=/:/rootfs:ro   --volume=/var/run:/var/run:ro   --volume=/sys:/sys:ro   --volume=/var/lib/docker/:/var/lib/docker:ro   --volume=/dev/disk/:/dev/disk:ro   --publish=8080:8080   --detach=true   --name=cadvisor   --privileged   --device=/dev/kmsg   gcr.io/cadvisor/cadvisor
+ 1060  docker run C-Advisor
+ 1061  sudo docker run   --volume=/:/rootfs:ro   --volume=/var/run:/var/run:ro   --volume=/sys:/sys:ro   --volume=/var/lib/docker/:/var/lib/docker:ro   --volume=/dev/disk/:/dev/disk:ro   --publish=8080:8080   --detach=true   --name=cadvisor   --privileged   --device=/dev/kmsg   gcr.io/cadvisor/cadvisor
+ 1062  sudo docker run   --volume=/:/rootfs:ro   --volume=/var/run:/var/run:ro   --volume=/sys:/sys:ro   --volume=/var/lib/docker/:/var/lib/docker:ro   --volume=/dev/disk/:/dev/disk:ro   --publish=8080:8080   --detach=true   --name=cadvisor   --privileged   --device=/dev/kmsg   gcr.io/cadvisor/cadvisor
+ 1063  sudo docker run   --volume=/:/rootfs:ro   --volume=/var/run:/var/run:ro   --volume=/sys:/sys:ro   --volume=/var/lib/docker/:/var/lib/docker:ro   --volume=/dev/disk/:/dev/disk:ro   --publish=8080:8080   --detach=true   --name=cadvisor   --privileged   --device=/dev/kmsg \
+ 1064  sudo docker run   --volume=/:/rootfs:ro   --volume=/var/run:/var/run:ro   --volume=/sys:/sys:ro   --volume=/var/lib/docker/:/var/lib/docker:ro   --volume=/dev/disk/:/dev/disk:ro   --publish=8081:8081   --detach=true   --name=cadvisor   --privileged   --device=/dev/kmsg   gcr.io/cadvisor/cadvisor
+ 1065  sudo docker run   --volume=/:/rootfs:ro   --volume=/var/run:/var/run:ro   --volume=/sys:/sys:ro   --volume=/var/lib/docker/:/var/lib/docker:ro   --volume=/dev/disk/:/dev/disk:ro   --publish=8081:8081   --detach=true   --name=cadvisor   --privileged   --device=/dev/kmsg   gcr.io/cadvisor/cadvisor
+ 1066  lsof -i 8080
+ 1067  lsof -i 8081
+ 1068  lsof -i :8081
+ 1069  lsof -i :8080
+ 1070  rm /var/lib/docker/network/files/local-kv.db
+ 1071  sudo service docker restart 
+ 1072  sudo docker run   --volume=/:/rootfs:ro   --volume=/var/run:/var/run:ro   --volume=/sys:/sys:ro   --volume=/var/lib/docker/:/var/lib/docker:ro   --volume=/dev/disk/:/dev/disk:ro   --publish=8080:8080   --detach=true   --name=cadvisor   --privileged   --device=/dev/kmsg   gcr.io/cadvisor/cadvisor
+ 1073  sudo docker run   --volume=/:/rootfs:ro   --volume=/var/run:/var/run:ro   --volume=/sys:/sys:ro   --volume=/var/lib/docker/:/var/lib/docker:ro   --volume=/dev/disk/:/dev/disk:ro   --publish=8087:8087   --detach=true   --name=cadvisor   --privileged   --device=/dev/kmsg   gcr.io/cadvisor/cadvisor
+ 1074  sudo docker run   --volume=/:/rootfs:ro   --volume=/var/run:/var/run:ro   --volume=/sys:/sys:ro   --volume=/var/lib/docker/:/var/lib/docker:ro   --volume=/dev/disk/:/dev/disk:ro   --publish=8087:8087   --detach=true   --name=cadvisor   --privileged   --device=/dev/kmsg   gcr.io/cadvisor/cadvisor
+ 1075  sudo docker run   --volume=/:/rootfs:ro   --volume=/var/run:/var/run:ro   --volume=/sys:/sys:ro   --volume=/var/lib/docker/:/var/lib/docker:ro   --volume=/dev/disk/:/dev/disk:ro   --publish=8080:8080   --detach=true   --name=cadvisor   --privileged   --device=/dev/kmsg   gcr.io/cadvisor/cadvisor
+ 1076  sudo docker run -d redis
+ 1077  history
